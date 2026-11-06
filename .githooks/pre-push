@@ -1,0 +1,14 @@
+#!/bin/sh
+# Pushes drava-nex's sufiyan branch along with this push, so the commits the
+# post-commit hook made there go out too. A failure here never blocks this push.
+
+nex=$(git config drava.nexPath || echo ../drava-nex)
+[ -d "$nex/.git" ] || exit 0
+branch=$(git -C "$nex" rev-parse --abbrev-ref HEAD)
+[ "$branch" = "sufiyan" ] || exit 0
+if [ -n "$(git -C "$nex" log --oneline origin/sufiyan..sufiyan 2>/dev/null)" ]; then
+  echo "[drava-mosaic] pushing drava-nex (sufiyan)..." >&2
+  git -C "$nex" push origin sufiyan </dev/null || \
+    echo "[drava-mosaic] drava-nex push failed; push it yourself from $nex." >&2
+fi
+exit 0

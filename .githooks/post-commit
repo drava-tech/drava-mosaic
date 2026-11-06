@@ -1,0 +1,15 @@
+#!/bin/sh
+# Copies each commit into drava-nex (packages/drava-mosaic, the CMS's
+# "Drava Mosaic" template) and commits it there, so a change is made once.
+# drava-nex lives at ../drava-nex unless `git config drava.nexPath <dir>` says otherwise.
+# Turned on per clone with: git config core.hooksPath .githooks
+
+nex=$(git config drava.nexPath || echo ../drava-nex)
+script="$nex/tools/sync-drava-mosaic.mjs"
+if [ ! -f "$script" ]; then
+  echo "[drava-mosaic] drava-nex not found at $nex; not synced." >&2
+  exit 0
+fi
+node "$script" "$(pwd)" --ref HEAD --commit || \
+  echo "[drava-mosaic] drava-nex was NOT updated (see above). Your mosaic commit is fine." >&2
+exit 0

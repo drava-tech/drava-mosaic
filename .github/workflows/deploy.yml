@@ -1,11 +1,8 @@
-# On every push:
-#   1. deploys to Vercel (main → production, any other branch → a preview URL);
-#   2. copies the change into drava-nex's packages/drava-mosaic (the CMS's
-#      "Drava Mosaic" template) and pushes it to drava-nex's NEX_BRANCH.
+# Deploys every push to Vercel: main → production, any other branch → a preview URL.
+# (Copying changes into drava-nex happens locally, in .githooks/.)
 #
-# Secrets (Settings → Secrets and variables → Actions):
-#   VERCEL_TOKEN    a token from https://vercel.com/account/tokens
-#   NEX_DEPLOY_KEY  the private half of a drava-nex deploy key with write access
+# Secret (Settings → Secrets and variables → Actions):
+#   VERCEL_TOKEN  a token from https://vercel.com/account/tokens
 
 name: Deploy
 
@@ -18,8 +15,6 @@ env:
   # From .vercel/project.json; IDs, not secrets.
   VERCEL_ORG_ID: team_mNJp43izhcrugYMySO51LDFu
   VERCEL_PROJECT_ID: prj_NBCGqT62YJ46hnjSZwTDLnOB6ik8
-  NEX_REPO: drava-tech/drava-nex
-  NEX_BRANCH: sufiyan
 
 jobs:
   vercel:
@@ -44,53 +39,3 @@ jobs:
           url=$(vercel deploy --prebuilt ${{ env.TARGET == 'production' && '--prod' || '' }} --token=$VERCEL_TOKEN)
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Deployed ($TARGET): $url" >> "$GITHUB_STEP_SUMMARY"
-
-  sync-nex:
-    runs-on: ubuntu-latest
-    # One at a time, in push order, so two quick pushes can't race to drava-nex.
-    concurrency:
-      group: sync-nex
-      cancel-in-progress: false
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          path: mosaic
-      - uses: actions/checkout@v4
-        with:
-          repository: ${{ env.NEX_REPO }}
-          ref: ${{ env.NEX_BRANCH }}
-          ssh-key: ${{ secrets.NEX_DEPLOY_KEY }}
-          path: nex
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Copy into packages/drava-mosaic
-        run: node nex/tools/sync-drava-mosaic.mjs mosaic
-
-      - name: Update pnpm-lock.yaml if dependencies changed
-        working-directory: nex
-        run: |
-          if ! git diff --quiet -- packages/drava-mosaic/package.json; then
-            corepack enable
-            pnpm install --lockfile-only
-          fi
-
-      - name: Commit and push to drava-nex
-        working-directory: nex
-        run: |
-          git add -A packages/drava-mosaic apps/api/src/routes/drava-mosaic.ts pnpm-lock.yaml
-          if git diff --cached --quiet; then
-            echo "drava-nex already matches this commit." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          # Credit the mosaic commit's author.
-          cd ../mosaic
-          name=$(git log -1 --format=%an); email=$(git log -1 --format=%ae)
-          subject=$(git log -1 --format=%s); sha=$(git rev-parse --short HEAD)
-          cd ../nex
-          git -c user.name="$name" -c user.email="$email" commit -q \
-            -m "sync Drava Mosaic: $subject" \
-            -m "From drava-tech/drava-mosaic@$sha (${GITHUB_REF_NAME})."
-          git push origin HEAD:$NEX_BRANCH
-          echo "Pushed to $NEX_REPO@$NEX_BRANCH: $(git rev-parse --short HEAD)" >> "$GITHUB_STEP_SUMMARY"
