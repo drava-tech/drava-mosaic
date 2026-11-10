@@ -5,10 +5,11 @@
 nex=$(git config drava.nexPath || echo ../drava-nex)
 [ -d "$nex/.git" ] || exit 0
 branch=$(git -C "$nex" rev-parse --abbrev-ref HEAD)
-[ "$branch" = "sufiyan" ] || exit 0
-if [ -n "$(git -C "$nex" log --oneline origin/sufiyan..sufiyan 2>/dev/null)" ]; then
-  echo "[drava-mosaic] pushing drava-nex (sufiyan)..." >&2
-  git -C "$nex" push origin sufiyan </dev/null || \
+want=$(git config drava.nexBranch || echo sufiyan)
+[ "$branch" = "$want" ] || exit 0
+if [ -n "$(git -C "$nex" log --oneline origin/$want..$want 2>/dev/null)" ]; then
+  echo "[drava-mosaic] pushing drava-nex ($want)..." >&2
+  git -C "$nex" push origin "$want" </dev/null || \
     echo "[drava-mosaic] drava-nex push failed; push it yourself from $nex." >&2
 fi
 exit 0

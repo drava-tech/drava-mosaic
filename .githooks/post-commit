@@ -10,6 +10,6 @@ if [ ! -f "$script" ]; then
   echo "[drava-mosaic] drava-nex not found at $nex; not synced." >&2
   exit 0
 fi
-node "$script" "$(pwd)" --ref HEAD --commit || \
+NEX_BRANCH=$(git config drava.nexBranch || echo sufiyan) node "$script" "$(pwd)" --ref HEAD --commit || \
   echo "[drava-mosaic] drava-nex was NOT updated (see above). Your mosaic commit is fine." >&2
 exit 0
