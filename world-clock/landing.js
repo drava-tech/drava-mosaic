@@ -3,6 +3,7 @@ import { LOCATIONS, LOCATIONS_BY_ID, MAX_PLACES } from "./locations.js";
 import { ARTS, ARTS_BY_ID } from "./arts.js";
 import { startMapPreview } from "./mapPreview.js";
 import { createAnalogClock } from "./analogClock.js";
+import logoUrl from "./assets/drava-mosaic-logo.png";
 
 /**
  * The city picker, laid out like Data Art Studio's "Compose your piece"
@@ -25,6 +26,7 @@ export function startLanding(root, initial, initialArt, initialClock, { onStart,
   root.style.removeProperty("--count");
   root.innerHTML = `
     <div class="landing">
+      <img class="lp-brand" src="${logoUrl}" alt="Drava Mosaic" width="416" height="92" />
       <header class="landing-header">
         <h1 class="landing-kicker">World <span>Clock</span></h1>
         <p class="landing-title">Compose Your Screen</p>
@@ -53,12 +55,8 @@ export function startLanding(root, initial, initialArt, initialClock, { onStart,
             </div>
           </section>
           <div class="lp-options">
-            <div class="lp-arts" role="radiogroup" aria-label="Artwork">
-              <span class="lp-arts-label">Artwork</span>
-            </div>
-            <div class="lp-arts lp-clocks" role="radiogroup" aria-label="Clock">
-              <span class="lp-arts-label">Clock</span>
-            </div>
+            <div class="lp-group"><span class="lp-arts-label">Artwork</span><div class="lp-arts" role="radiogroup" aria-label="Artwork"></div></div>
+            <div class="lp-group"><span class="lp-arts-label">Clock</span><div class="lp-arts lp-clocks" role="radiogroup" aria-label="Clock"></div></div>
           </div>
           <button class="lp-generate" type="button">Show Clock</button>
           <p class="lp-hint" aria-live="polite"></p>
