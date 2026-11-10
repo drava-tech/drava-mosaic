@@ -26,11 +26,10 @@ export function startLanding(root, initial, initialArt, initialClock, { onStart,
   root.style.removeProperty("--count");
   root.innerHTML = `
     <div class="landing">
-      <img class="lp-brand" src="${logoUrl}" alt="Drava Mosaic" width="416" height="92" />
       <header class="landing-header">
-        <h1 class="landing-kicker">World <span>Clock</span></h1>
-        <p class="landing-title">Compose Your Screen</p>
-        <p class="landing-sub">Pick up to ${MAX_PLACES} cities. Each one becomes a band with its local time and temperature.</p>
+        <h1 class="landing-kicker landing-logo"><img src="${logoUrl}" alt="Drava Mosaic" width="416" height="92" /></h1>
+        <p class="landing-title">World Clock</p>
+        <p class="landing-sub">Choose up to ${MAX_PLACES} cities. Each one becomes a live band showing its local time and temperature.</p>
       </header>
 
       <div class="lp-shell">

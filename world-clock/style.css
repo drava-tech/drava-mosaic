@@ -778,7 +778,7 @@ body:has(.landing-view) {
 .lp-exit {
   position: fixed;
   top: calc(20 * var(--u));
-  left: calc(20 * var(--u));
+  right: calc(20 * var(--u));
   z-index: 2;
   display: inline-flex;
   align-items: center;
@@ -1497,7 +1497,7 @@ body:has(.landing-view) {
 .lp-brand {
   position: absolute;
   top: calc(20 * var(--u));
-  right: calc(28 * var(--u));
+  left: calc(28 * var(--u));
   height: calc(38 * var(--u));
   width: auto;
   user-select: none;
@@ -1711,4 +1711,15 @@ body:has(.landing-view) {
 
 .landing-sub {
   margin-top: calc(10 * var(--u));
+}
+
+.landing-logo img {
+  display: block;
+  height: calc(78 * var(--u));
+  width: auto;
+  margin: 0 auto;
+}
+
+.landing-title {
+  margin-top: calc(14 * var(--u));
 }
