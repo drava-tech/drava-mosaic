@@ -575,8 +575,9 @@ body:has(.landing-view) {
 }
 
 .landing-header {
+  grid-area: head;
   text-align: center;
-  margin-bottom: calc(36 * var(--u));
+  margin-bottom: calc(8 * var(--u));
 }
 
 .landing-kicker {
@@ -613,10 +614,10 @@ body:has(.landing-view) {
   width: min(calc(1384 * var(--u)), 100%);
   display: grid;
   grid-template-columns: minmax(calc(230 * var(--u)), calc(280 * var(--u))) minmax(0, 1fr) minmax(calc(240 * var(--u)), calc(310 * var(--u)));
-  grid-template-areas: "bands preview countries";
+  grid-template-areas: "head head head" "bands preview countries";
   align-items: start;
   gap: calc(32 * var(--u));
-  padding: calc(48 * var(--u)) calc(36 * var(--u)) calc(40 * var(--u));
+  padding: calc(44 * var(--u)) calc(36 * var(--u)) calc(40 * var(--u));
   background: linear-gradient(180deg, rgba(22, 27, 33, 0.42) 0%, rgba(22, 27, 33, 0.55) 100%);
   border: 1px solid #2a3038;
   border-radius: calc(32 * var(--u));
@@ -1367,7 +1368,7 @@ body:has(.landing-view) {
 
   .lp-shell {
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "bands countries" "preview preview";
+    grid-template-areas: "head head" "bands countries" "preview preview";
     padding: 36px 24px;
   }
 }
@@ -1379,7 +1380,7 @@ body:has(.landing-view) {
   }
 
   .landing-header {
-    margin-bottom: 28px;
+    margin-bottom: 0;
   }
 
   .landing-sub {
@@ -1388,7 +1389,7 @@ body:has(.landing-view) {
 
   .lp-shell {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "bands" "countries" "preview";
+    grid-template-areas: "head" "bands" "countries" "preview";
     gap: 20px;
     padding: 20px 14px;
     border-radius: 24px;
@@ -1722,4 +1723,13 @@ body:has(.landing-view) {
 
 .landing-title {
   margin-top: calc(14 * var(--u));
+}
+
+/* The logo sits above the card; the title and description sit inside it. */
+.landing-logo {
+  margin: 0 0 calc(28 * var(--u));
+}
+
+.landing-header .landing-title {
+  margin-top: 0;
 }

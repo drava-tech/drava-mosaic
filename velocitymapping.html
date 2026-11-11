@@ -205,8 +205,9 @@
     }
 
     .landing-header {
+      grid-area: head;
       text-align: center;
-      margin-bottom: calc(36 * var(--u));
+      margin-bottom: calc(8 * var(--u));
     }
 
     .landing-kicker {
@@ -243,10 +244,10 @@
       width: min(calc(1384 * var(--u)), 100%);
       display: grid;
       grid-template-columns: minmax(calc(200 * var(--u)), calc(248 * var(--u))) minmax(0, 1fr) minmax(calc(240 * var(--u)), calc(310 * var(--u)));
-      grid-template-areas: "data preview art";
+      grid-template-areas: "head head head" "data preview art";
       align-items: start;
       gap: calc(32 * var(--u));
-      padding: calc(48 * var(--u)) calc(36 * var(--u)) calc(40 * var(--u));
+      padding: calc(44 * var(--u)) calc(36 * var(--u)) calc(40 * var(--u));
       background: linear-gradient(180deg, rgba(22, 27, 33, 0.42) 0%, rgba(22, 27, 33, 0.55) 100%);
       -webkit-backdrop-filter: blur(12px) saturate(1.15);
       backdrop-filter: blur(12px) saturate(1.15);
@@ -686,7 +687,7 @@
 
       .lp-shell {
         grid-template-columns: 1fr 1fr;
-        grid-template-areas: "data art" "preview preview";
+        grid-template-areas: "head head" "data art" "preview preview";
         padding: 36px 24px;
       }
     }
@@ -698,7 +699,7 @@
       }
 
       .landing-header {
-        margin-bottom: 28px;
+        margin-bottom: 0;
       }
 
       .landing-sub {
@@ -707,7 +708,7 @@
 
       .lp-shell {
         grid-template-columns: minmax(0, 1fr);
-        grid-template-areas: "data" "art" "preview";
+        grid-template-areas: "head" "data" "art" "preview";
         gap: 20px;
         padding: 20px 14px;
         border-radius: 24px;
@@ -2642,6 +2643,15 @@
       width: auto;
       margin: 0 auto;
     }
+
+    /* The logo sits above the card; the title and description sit inside it. */
+    .landing-logo {
+      margin: 0 0 calc(28 * var(--u));
+    }
+
+    .landing-header .landing-title {
+      margin-top: 0;
+    }
   </style>
 </head>
 
@@ -2660,13 +2670,14 @@
   <div id="page1" class="page">
 
     <div class="landing">
-      <header class="landing-header">
-        <h1 class="landing-kicker landing-logo"><img src="assets/drava-mosaic-logo.png" alt="Drava Mosaic" width="416" height="92" /></h1>
-        <p class="landing-title">Compose Your Piece</p>
-        <p class="landing-sub">Turn live data into moving art. Choose the data and an artwork to start.</p>
-      </header>
+      <h1 class="landing-kicker landing-logo"><img src="assets/drava-mosaic-logo.png" alt="Drava Mosaic" width="416" height="92" /></h1>
 
       <div class="lp-shell">
+        <header class="landing-header">
+          <p class="landing-title">Compose Your Piece</p>
+          <p class="landing-sub">Turn live data into moving art. Choose the data and an artwork to start.</p>
+        </header>
+
         <!-- DATA -->
         <section class="lp-panel lp-data" aria-label="Data">
           <h2 class="lp-panel-title">Data</h2>
