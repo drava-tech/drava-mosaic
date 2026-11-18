@@ -8,7 +8,7 @@
  * req/res calls. WEATHERAPI_KEY comes from Vercel's project settings when
  * deployed, .env locally.
  *
- * GET /api/wind?location=<id>  →  { kph, tempC, condition }
+ * GET /api/wind?location=<id>  →  { kph, degree, tempC, condition }
  */
 
 // Every place the location pickers may ask for. An allowlist, not a
@@ -58,6 +58,8 @@ export default async function wind(req, res) {
     const data = await apiRes.json();
     send(res, 200, {
       kph: data.current.wind_kph,
+      // Where the wind blows from, in degrees clockwise from north.
+      degree: data.current.wind_degree,
       tempC: data.current.temp_c,
       condition: data.current.condition?.text ?? null,
     });

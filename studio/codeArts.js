@@ -1,4 +1,5 @@
 import { createTideArt } from "./tideArt.js";
+import { createBooleanArt } from "./booleanArt.js";
 
 /**
  * The studio's arts that are made in code rather than played from a video,
@@ -11,5 +12,6 @@ import { createTideArt } from "./tideArt.js";
  */
 window.dravaCodeArts = {
   tide: createTideArt,
+  boolean: createBooleanArt,
 };
 window.dispatchEvent(new Event("drava-code-arts-ready"));
