@@ -1615,7 +1615,7 @@ body {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 720px), (orientation: portrait) and (max-width: 1100px) {
   :root {
     --pad: 13px;
     --radius: 14px;
@@ -1808,10 +1808,49 @@ body {
   }
 }
 
-/* Landscape phones: keep the stage clear */
-@media (max-height: 460px) and (orientation: landscape) {
-  .legend {
+/* Landscape phones: keep the stage clear. The sidebar shrinks to a slim
+   card (title + airport + stats) so the garden isn't covered. */
+@media (max-height: 520px) and (orientation: landscape) {
+  :root {
+    --panel-width: 168px;
+    --pad: 8px;
+    --hud-padding: 8px;
+  }
+
+  .legend,
+  .detail,
+  .tower-sub {
     display: none;
+  }
+
+  .hud-panel {
+    bottom: auto;
+    max-height: calc(100% - 16px);
+  }
+
+  .stat-value {
+    font-size: 15px;
+  }
+
+  .stat-label {
+    font-size: 7px;
+  }
+
+  .select-wrap select {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 11px;
+  }
+
+  .hud-toggle-btn {
+    width: 96px;
+    height: 28px;
+  }
+
+  .studio-back-btn {
+    right: calc(var(--hud-padding) + 106px);
+    width: 28px;
+    height: 28px;
   }
 
   .titlecard {
@@ -1857,14 +1896,14 @@ body {
 }
 
 /* Slide the sidebar off-screen to the left on desktop layout */
-@media (min-width: 721px) {
+@media (min-width: 721px) and (orientation: landscape), (min-width: 1101px) {
   .hud:not(.hud-active) .hud-panel {
     transform: translateX(-115%) !important;
   }
 }
 
 /* Slide the top bar up on mobile layout */
-@media (max-width: 720px) {
+@media (max-width: 720px), (orientation: portrait) and (max-width: 1100px) {
   .hud:not(.hud-active) .hud-panel {
     transform: translateY(-115%) !important;
   }
